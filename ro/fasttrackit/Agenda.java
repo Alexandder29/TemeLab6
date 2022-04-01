@@ -1,7 +1,7 @@
 package ro.fasttrackit;
 
 import java.util.Arrays;
-// -1 means error;
+// return -1 if number not found;
 
 public class Agenda {
     public static void main(String[] args) {
@@ -14,20 +14,31 @@ public class Agenda {
         System.out.println(addToAgenda(agendaArr, 9));
         System.out.println("New agenda looks like:");
         System.out.println(Arrays.toString(agendaArr));
+        System.out.println("Replace element in agenda");
+        System.out.println(replace(agendaArr,16,8));
         System.out.println("Searched number in filled agenda:");
         System.out.println(find(agendaArr, 9));
     }
 
-    public static int addToAgenda(int[] agendaArr, int numbersToFill) {
+    public static int addToAgenda(int[] agenda, int numbersToFill) {
         int i = 0;
-        while (i < agendaArr.length && agendaArr[i] != 0) {
+        while (i < agenda.length && agenda[i] != 0) {
             i++;
         }
-        if (i == agendaArr.length) {
+        if (i == agenda.length) {
             return -1;
         }
-        agendaArr[i] = numbersToFill;
+        agenda[i] = numbersToFill;
         return i;
+    }
+
+    public static int replace(int[] agenda, int numberToReplace, int replaceWith) {
+        for (int j : agenda) {
+            if (j == numberToReplace) {
+                return replaceWith;
+            }
+        }
+        return -1;
     }
 
     public static int find(int[] agenda, int search) {
