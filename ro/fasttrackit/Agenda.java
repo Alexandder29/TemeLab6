@@ -12,12 +12,25 @@ public class Agenda {
         System.out.println(addToAgenda(agendaArr, 28));
         System.out.println(addToAgenda(agendaArr, 17));
         System.out.println(addToAgenda(agendaArr, 9));
-        System.out.println("New agenda looks like:");
+        System.out.println("====Filled agenda looks like====");
         System.out.println(Arrays.toString(agendaArr));
-        System.out.println("Replace element in agenda");
-        System.out.println(replace(agendaArr,16,8));
-        System.out.println("Searched number in filled agenda:");
-        System.out.println(find(agendaArr, 9));
+
+        System.out.println("====Replace element in agenda====");
+        System.out.println(Arrays.toString(agendaArr));
+        System.out.println(replace(agendaArr, 17, 8));
+        System.out.println(Arrays.toString(agendaArr));
+
+        System.out.println("====Searched number in filled agenda====");
+        System.out.println(Arrays.toString(agendaArr));
+        System.out.println(search(agendaArr, 9));
+
+        System.out.println("====Remove element from array====");
+        System.out.println("Original array:");
+        System.out.println(Arrays.toString(agendaArr));
+        int indexToRemove = 3;
+        agendaArr = remove(agendaArr, indexToRemove);
+        System.out.println("Copy of array(agendaArr-1)");
+        System.out.println(Arrays.toString(agendaArr));
     }
 
     public static int addToAgenda(int[] agenda, int numbersToFill) {
@@ -33,20 +46,38 @@ public class Agenda {
     }
 
     public static int replace(int[] agenda, int numberToReplace, int replaceWith) {
-        for (int j : agenda) {
-            if (j == numberToReplace) {
-                return replaceWith;
+        for (int i = 0; i < agenda.length; i++) {
+            if (agenda[i] == numberToReplace) {
+                agenda[i] = replaceWith;
+                return i;
             }
         }
         return -1;
     }
 
-    public static int find(int[] agenda, int search) {
-        for (int j : agenda) {
-            if (search == j) {
-                return j;
-            }
+    public static int[] remove(int[] agenda, int remove) {
+        //if agenda is empty or index not in agenda.length, return original agenda
+        if (agenda == null || remove < 0 || remove >= agenda.length) {
+            return agenda; //instead of -1
         }
-        return -1;
+        //new array of size agenda-1
+        int[] copy = new int[agenda.length - 1];
+        //from the original agenda, copy elements from [0] till "[remove]"
+        //then copy from "[remove + 1]" till end
+        System.arraycopy(agenda, 0, copy, 0, remove);
+        System.arraycopy(agenda, remove + 1, copy, remove, agenda.length - remove - 1);
+
+        return copy;
+    }
+
+    public static int search(int[] agenda, int find) {
+        int i = 0;
+        while (i < agenda.length && agenda[i] != find) {
+            i++;
+        }
+        if (i == agenda.length) {
+            return -1;
+        }
+        return i;
     }
 }
